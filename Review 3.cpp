@@ -234,6 +234,7 @@ void loadVehicles() {
 // ================= AUTH =================
 void registerUser(string role) {
     User u;
+    cout<<"\nRegister Customer\n";
     cout << "Username: ";
     getline(cin >> ws, u.username);
     cout << "Password: ";
@@ -269,8 +270,10 @@ public:
         cout << "1.Card 2.UPI 3.Cash: ";
         cin >> m;
         if (m < 1 || m > 3) throw runtime_error("Invalid payment");
+        cout<<"\nPayment Successful!\n";
         cout << "Paid: " << amt << endl;
     }
+
 };
 
 // ================= ADMIN =================
@@ -301,6 +304,7 @@ public:
             double p; cout<<"Payload: "; cin>>p;
             vehicles.push_back(new Truck(vehicleCounter++, name, fuel, price, p));
         }
+        cout<<"\nVehicle Added Successfully!";
     }
 
     void updateVehicle() {
@@ -452,7 +456,7 @@ public:
         for (auto v : vehicles) {
             if (v->getID() == id && v->getStatus() == "Booked") {
                 v->setStatus("Rented");
-                cout << "Vehicle picked up\n";
+                cout << "Vehicle picked up!\n";
                 return;
             }
         }
@@ -468,7 +472,7 @@ public:
         for (auto v : vehicles) {
             if (v->getID() == id && v->getStatus() == "Rented") {
                 v->setStatus("Returned");
-                cout << " Vehicle returned. Awaiting inspection\n";
+                cout << " Vehicle returned.\nAwaiting inspection\n";
                 return;
             }
         }
@@ -486,7 +490,7 @@ public:
 
                 if (cond == 1) {
                     v->setStatus("Available");
-                    cout << " Vehicle OK -- Available\n";
+                    cout << "Vehicle Available for Next Booking\n";
                 } else {
                     v->setStatus("Maintenance");
                     maintenanceLog.push_back("Vehicle " + to_string(id) + " damaged");
@@ -572,15 +576,17 @@ int main() {
 
     do {
         cout << "\n========= MAIN MENU =========\n";
-        cout << "1. Admin Login \n2. Register Customer\n3. Customer Login\n4. Agent Login\n5. Mechanic Login\n0. Exit\n";
-        cout<<"Enter Choice:";
+        cout << "\n1. Admin Login \n2. Register Customer\n3. Customer Login\n4. Agent Login\n5. Mechanic Login\n0. Exit\n";
+        cout<<"\nEnter Choice:";
         cin >> role;
-
+        cout<<endl;
         if (role==1 && login("admin")) {
+            cout<<"\nAdmin login Successful!\n";
             do {
                 cout << "\n1.Add 2.Update 3.Pricing 4.View 5.Retire 6.Users 7.Report 0.Logout\n";
+                cout<<"\nEnter Choice:";
                 cin >> op;
-
+                cout<<endl;
                 if(op==1) admin.addVehicle();
                 else if(op==2) admin.updateVehicle();
                 else if(op==3) admin.managePricing();
@@ -595,10 +601,13 @@ int main() {
         else if(role==2) registerUser("customer");
 
         else if(role==3 && login("customer")) {
+
+            cout<<"\nCustomer Login Successful!\n";
             do {
                 cout << "\n1.View 2.Search 3.Book 4.Manage Booking 5.Profile 0.Logout\n";
+                cout<<"\nEnter Choice:";
                 cin >> op;
-
+                cout<<endl;
                 if(op==1) customer.view();
                 else if(op==2) customer.search();
                 else if(op==3) customer.book(pay);
@@ -609,10 +618,13 @@ int main() {
         }
 
         else if(role==4 && login("agent")) {
+            cout<<"\nAgent Login Successful!\n";
             do {
-                cout << "\n1.View Bookings 2.Pickup 3.Return 4.Inspect 0.Logout\n";
-                cin >> op;
 
+                cout << "\n1.View Bookings 2.Pickup 3.Return 4.Inspect 0.Logout\n";
+                cout<<"\nEnter Choice:";
+                cin >> op;
+                cout<<endl;
                 if(op==1) agent.viewBookings();
                 else if(op==2) agent.pickup();
                 else if(op==3) agent.ret();
@@ -622,10 +634,12 @@ int main() {
         }
 
         else if(role==5 && login("mechanic")) {
+            cout<<"\nMechanic Login Successful!\n";
             do {
                 cout << "\n1.View Schedule 2.Record 3.Fix 0.Logout\n";
+                cout<<"\nEnter Choice:";
                 cin >> op;
-
+                cout<<endl;
                 if(op==1) mech.viewSchedule();
                 else if(op==2) mech.record();
                 else if(op==3) mech.fix();
