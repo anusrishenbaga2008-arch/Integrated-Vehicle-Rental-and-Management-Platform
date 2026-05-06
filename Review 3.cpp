@@ -304,7 +304,7 @@ public:
             double p; cout<<"Payload: "; cin>>p;
             vehicles.push_back(new Truck(vehicleCounter++, name, fuel, price, p));
         }
-        cout<<"\nVehicle Added Successfully!";
+        cout<<"\nVehicle Added Successfully!\n";
     }
 
     void updateVehicle() {
@@ -342,7 +342,16 @@ public:
         cout << "Total Revenue: " << totalRevenue << endl;
 
         cout << "\nBookings:\n";
-        for (auto &b : bookingHistory)
+
+        list<string> uniqueBookings;
+
+        for (auto &b : bookingHistory) {
+            if (find(uniqueBookings.begin(), uniqueBookings.end(), b) == uniqueBookings.end()) {
+                uniqueBookings.push_back(b);
+            }
+        }
+
+        for (auto &b : uniqueBookings)
             cout << b << endl;
 
         cout << "\nMaintenance Logs:\n";
@@ -539,7 +548,7 @@ public:
             if (v->getID() == id && v->getStatus() == "Maintenance") {
                 v->setStatus("Available");
                 maintenanceLog.push_back("Vehicle " + to_string(id) + " fixed and returned");
-                cout << " Vehicle repaired → Available\n";
+                cout << " Vehicle repaired and Available!\n";
                 return;
             }
         }
